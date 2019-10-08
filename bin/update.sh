@@ -9,7 +9,27 @@ PINGMAX=`echo ${OUTPUT} | grep rtt | awk -F "/" '{ print $6 }'`
 PINGMDEV=`echo ${OUTPUT} | grep rtt | awk -F "/" '{ print $7 }' |awk '{print $1}'`
 PINGLOSS=`echo ${OUTPUT} | grep -oP '\d+(?=% packet loss)'`
 
-#echo "PINGMIN:${PINGMIN} ${PINGAVG}:PINGAVG PINGMAX:${PINGMAX} PINGMDEV:${PINGMDEV} PINGLOSS:${PINGLOSS}"
+if [ -z "${PINGMIN}" ]
+then
+PINGMIN="0"
+fi
+
+if [ -z "${PINGAVG}" ]
+then
+PINGAVG="0"
+fi
+
+if [ -z "${PINGMAX}" ]
+then
+PINGMAX="0"
+fi
+
+if [ -z "${PINGMDEV}" ]
+then
+PINGMDEV="0"
+fi
+
+#echo "PINGMIN:${PINGMIN} PINGAVG:${PINGAVG} PINGMAX:${PINGMAX} PINGMDEV:${PINGMDEV} PINGLOSS:${PINGLOSS}"
 #echo "$RRDTOOL update $FILE N:${PINGMIN}:${PINGAVG}:${PINGMAX}:${PINGMDEV}:${PINGLOSS}"
 
 $RRDTOOL update $FILE N:${PINGMIN}:${PINGAVG}:${PINGMAX}:${PINGMDEV}:${PINGLOSS}
